@@ -1,8 +1,3 @@
 package com.kazmierczak.GithubDemo.models;
 
-import lombok.Data;
-
-@Data
-public class Owner {
-    private String login;
-}
+public record Owner(String login) {}

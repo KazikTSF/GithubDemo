@@ -77,6 +77,7 @@ class GithubDemoApplicationTests {
         assertThat(response).isNotNull();
         List<RepoResponse> responses = response.collectList().block();
         assertThat(responses).isNotNull();
+        assertThat(responses.size()).isEqualTo(1);
         assertThat(responses.getFirst().getName()).isEqualTo("testRepo");
         assertThat(responses.getFirst().getOwnerLogin()).isEqualTo("testOwner");
         List<BranchResponse> branches = responses.getFirst().getBranches();
@@ -86,42 +87,24 @@ class GithubDemoApplicationTests {
 
     }
     private Repository getRepository() {
-        Repository repository = new Repository();
-        repository.setName("testRepo");
-
-        Owner owner = new Owner();
-        owner.setLogin("testOwner");
-        repository.setOwner(owner);
-        repository.setFork(false);
-        return repository;
+        Owner owner = new Owner("testOwner");
+        return new Repository("testRepo", owner, false);
     }
     private Repository getFork() {
-        Repository repository = new Repository();
-        repository.setName("testFork");
-
-        Owner owner = new Owner();
-        owner.setLogin("testOwner");
-        repository.setOwner(owner);
-        repository.setFork(true);
-        return repository;
+        Owner owner = new Owner("testOwner");
+        return new Repository("testFork", owner, true);
     }
 
     private List<Branch> getBranches() {
         List<Branch> branches = new ArrayList<>();
-        Branch branch1 = new Branch();
-        branch1.setName("testBranch1");
 
-        Commit commit1 = new Commit();
-        commit1.setSha("sha1");
-        branch1.setCommit(commit1);
+        Commit commit1 = new Commit("sha1");
+        Branch branch1 = new Branch("testBranch1", commit1);
+
+        Commit commit2 = new Commit("sha2");
+        Branch branch2 = new Branch("testBranch2", commit2);
+
         branches.add(branch1);
-
-        Branch branch2 = new Branch();
-        branch2.setName("testBranch2");
-
-        Commit commit2 = new Commit();
-        commit1.setSha("sha2");
-        branch2.setCommit(commit2);
         branches.add(branch2);
 
         return branches;

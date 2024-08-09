@@ -28,7 +28,7 @@ public class GithubService {
                 .onStatus(HttpStatusCode::is4xxClientError, clientResponse ->
                         Mono.error(new UserNotFoundException("User not found: " + userLogin)))
                 .bodyToFlux(Repository.class)
-                .filter(r -> !r.isFork())
+                .filter(r -> !r.fork())
                 .flatMap(this::mapToRepoResponse)
                 .limitRate(10)
                 .retryWhen(Retry.backoff(3, Duration.ofSeconds(2))
@@ -36,10 +36,10 @@ public class GithubService {
     }
 
     private Mono<RepoResponse> mapToRepoResponse(Repository repository) {
-        return getBranches(repository.getOwner().getLogin(), repository.getName()).collectList()
+        return getBranches(repository.owner().login(), repository.name()).collectList()
                 .map(branches -> RepoResponse.builder()
-                        .ownerLogin(repository.getOwner().getLogin())
-                        .name(repository.getName())
+                        .ownerLogin(repository.owner().login())
+                        .name(repository.name())
                         .branches(branches)
                         .build());
     }
@@ -51,8 +51,8 @@ public class GithubService {
                 .retrieve()
                 .bodyToFlux(Branch.class)
                 .map(branch -> BranchResponse.builder()
-                        .name(branch.getName())
-                        .lastCommitSha(branch.getCommit().getSha())
+                        .name(branch.name())
+                        .lastCommitSha(branch.commit().sha())
                         .build());
     }
 }
