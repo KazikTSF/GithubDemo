@@ -13,7 +13,7 @@ import reactor.core.publisher.Flux;
 @RequiredArgsConstructor
 public class GithubController {
     private final GithubService githubService;
-    @GetMapping(value = "/{user-login}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{user-login}", produces = MediaType.APPLICATION_JSON_VALUE, headers = "Accept=application/json")
     @ResponseStatus(HttpStatus.OK)
     public Flux<RepoResponse> getAllRepos(@PathVariable("user-login") String userLogin) {
         return githubService.getAllRepos(userLogin);
