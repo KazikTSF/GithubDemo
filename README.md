@@ -27,15 +27,21 @@ As an api consumer, given not existing github user, I would like to receive 404 
 ```GithubController``` Main controller for handling incoming HTTP requests.
 ### DTO
 ```BranchResponse``` DTO containing branch information specified in acceptance criteria.
+
 ```RepoResponse``` DTO containing Repository information specified in acceptance criteria.
 ### Exception
 ```ErrorResponse``` record indicating what is in the response for 404 User not found Error.
+
 ```UserNotFoundException``` Exception inheriting from RuntimeException that is thrown when specified user is not found.
+
 ```GlobalExceptionHandler``` ControllerAdvice class for handling errors.
 ### Models
 ```Branch```: Represents a branch in a repository.
+
 ```Commit```: Represents a commit in a repository.
+
 ```Owner```: Represents the owner of a repository.
+
 ```Repository```: Represents a repository.
 ### Services
 ```GithubSerbice``` main service that fetches data from GitHub API.

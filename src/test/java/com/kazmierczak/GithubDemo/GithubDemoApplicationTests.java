@@ -43,7 +43,7 @@ class GithubDemoApplicationTests {
             .build();
 
     @Test
-    @DisplayName("Should Throw User not Found exception")
+    @DisplayName("Should throw UserNotFoundException")
     public void getAllRepos_UserNotFoundException(WireMockRuntimeInfo wmRuntimeInfo) {
         String baseUrl = "http://localhost:" + wmRuntimeInfo.getHttpPort();
         githubService = new GithubService(WebClient.builder().baseUrl(baseUrl).build());
