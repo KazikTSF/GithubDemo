@@ -1,5 +1,9 @@
 # Github API service
 This project provides API to connect with github and list repositories according to acceptance criteria.
+## Technology Stack
+- Java 21
+- Spring Boot 3.3.2
+- Maven
 ## Acceptance criteria
 As an api consumer, given username and header “Accept: application/json”, I would like to list all his github repositories, which are not forks. Information, which I require in the response, is:
 
