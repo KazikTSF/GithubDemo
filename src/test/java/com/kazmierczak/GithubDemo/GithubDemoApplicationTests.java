@@ -78,12 +78,12 @@ class GithubDemoApplicationTests {
         List<RepoResponse> responses = response.collectList().block();
         assertThat(responses).isNotNull();
         assertThat(responses.size()).isEqualTo(1);
-        assertThat(responses.getFirst().getName()).isEqualTo("testRepo");
-        assertThat(responses.getFirst().getOwnerLogin()).isEqualTo("testOwner");
-        List<BranchResponse> branches = responses.getFirst().getBranches();
+        assertThat(responses.getFirst().name()).isEqualTo("testRepo");
+        assertThat(responses.getFirst().ownerLogin()).isEqualTo("testOwner");
+        List<BranchResponse> branches = responses.getFirst().branches();
         assertThat(branches).isNotNull();
-        assertThat(branches.get(0).getName()).isEqualTo("testBranch1");
-        assertThat(branches.get(1).getName()).isEqualTo("testBranch2");
+        assertThat(branches.get(0).name()).isEqualTo("testBranch1");
+        assertThat(branches.get(1).name()).isEqualTo("testBranch2");
 
     }
     private Repository getRepository() {

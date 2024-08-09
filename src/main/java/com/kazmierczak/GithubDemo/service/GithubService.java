@@ -21,6 +21,7 @@ import java.time.Duration;
 @Slf4j
 public class GithubService {
     private final WebClient webClient;
+
     public Flux<RepoResponse> getAllRepos(String userLogin) {
         return webClient.get()
                 .uri("/users/{userLogin}/repos", userLogin)
@@ -37,11 +38,7 @@ public class GithubService {
 
     private Mono<RepoResponse> mapToRepoResponse(Repository repository) {
         return getBranches(repository.owner().login(), repository.name()).collectList()
-                .map(branches -> RepoResponse.builder()
-                        .ownerLogin(repository.owner().login())
-                        .name(repository.name())
-                        .branches(branches)
-                        .build());
+                .map(branches -> new RepoResponse(repository.name(), repository.owner().login(), branches));
     }
 
     private Flux<BranchResponse> getBranches(String ownerLogin, String repoName) {
@@ -50,9 +47,6 @@ public class GithubService {
                         .build(ownerLogin, repoName))
                 .retrieve()
                 .bodyToFlux(Branch.class)
-                .map(branch -> BranchResponse.builder()
-                        .name(branch.name())
-                        .lastCommitSha(branch.commit().sha())
-                        .build());
+                .map(branch -> new BranchResponse(branch.name(), branch.commit().sha()));
     }
 }

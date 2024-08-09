@@ -1,3 +1,4 @@
 package com.kazmierczak.GithubDemo.models;
 
-public record Owner(String login) {}
+public record Owner(String login) {
+}
